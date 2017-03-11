@@ -1,0 +1,33 @@
+apply plugin: 'groovy'
+apply plugin: 'java-library'
+
+repositories {
+    jcenter()
+}
+
+group = 'com.oneuse'
+version = '0.1.0'
+
+ext {
+    aetherVersion = '1.1.0'
+}
+
+dependencies {
+    compile "org.eclipse.aether:aether-api:${aetherVersion}",
+            "org.eclipse.aether:aether-spi:${aetherVersion}",
+            "org.eclipse.aether:aether-util:${aetherVersion}",
+            "org.eclipse.aether:aether-impl:${aetherVersion}",
+            "org.eclipse.aether:aether-connector-basic:${aetherVersion}",
+            "org.eclipse.aether:aether-transport-file:${aetherVersion}",
+            "org.eclipse.aether:aether-transport-http:${aetherVersion}",
+            'org.apache.maven:maven-aether-provider:3.1.0',
+            'org.slf4j:slf4j-api:1.7.21'
+
+    testCompile gradleTestKit(),
+                localGroovy(),
+                'org.codehaus.groovy:groovy:2.4.7',
+                'junit:junit:4.12'
+    testCompile ('org.spockframework:spock-core:1.0-groovy-2.4') {
+        exclude (module: 'groovy-all')
+    }
+}
