@@ -8,10 +8,10 @@ import org.eclipse.aether.repository.RemoteRepository;
 import org.eclipse.aether.resolution.VersionRangeRequest;
 import org.eclipse.aether.resolution.VersionRangeResolutionException;
 import org.eclipse.aether.resolution.VersionRangeResult;
+import org.eclipse.aether.version.Version;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Repository {
     private static final String ALL_ARTIFACT_VERSIONS_FORMAT = "%s:%s:[0,)";
@@ -35,14 +35,11 @@ public class Repository {
         this.remoteRepository = remoteRepository;
     }
 
-    public List<String> findArtifactVersions(String groupId, String artifactId) {
+    public List<Version> findArtifactVersions(String groupId, String artifactId) {
         VersionRangeRequest request = createVersionRangeRequest(groupId, artifactId);
         VersionRangeResult versionRangeResult = resolveVersionRange(request);
 
-        return versionRangeResult.getVersions()
-                                 .stream()
-                                 .map(version -> version.toString())
-                                 .collect(Collectors.toList());
+        return versionRangeResult.getVersions();
     }
 
     private VersionRangeRequest createVersionRangeRequest(String groupId, String artifactId) {
