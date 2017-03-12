@@ -12,7 +12,7 @@ import org.eclipse.aether.transport.file.FileTransporterFactory;
 import org.eclipse.aether.transport.http.HttpTransporterFactory;
 
 public class RepositoryService {
-    private static final String LOCAL_REPOSITORY_PATH = "/tmp";
+    private static final String LOCAL_REPOSITORY_PATH = "/tmp/inner";
 
     private RepositoryService() { }
 

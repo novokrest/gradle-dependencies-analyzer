@@ -4,14 +4,14 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ArtifactResolver {
+public class ArtifactVersionProvider {
     private final Repository repository;
 
-    public static ArtifactResolver create(String repositoryUrl) {
-        return new ArtifactResolver(Repository.create(repositoryUrl));
+    public static ArtifactVersionProvider create(String repositoryUrl) {
+        return new ArtifactVersionProvider(Repository.create(repositoryUrl));
     }
 
-    public ArtifactResolver(Repository repository) {
+    public ArtifactVersionProvider(Repository repository) {
         this.repository = repository;
     }
 
