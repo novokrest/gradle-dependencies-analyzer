@@ -33,6 +33,9 @@ public class DependencyPath implements Iterable<ArtifactName> {
 
     @Override
     public String toString() {
-        return dependencies.toString();
+        return dependencies.stream()
+                            .map(dependency -> dependency.toString())
+                            .reduce((dep1, dep2) -> dep1 + " -> " + dep2)
+                            .get();
     }
 }

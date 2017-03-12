@@ -24,4 +24,23 @@ class AlternativeDependencyPathFinderSpec extends Specification {
             alternativeDependencyPaths.size() > 0
             println alternativeDependencyPaths
     }
+
+    def 'check that alternative dependency paths are found successfully in test repository'() {
+        given:
+            def repository = Repository.create(TestRepositories.REPO_1)
+            def artifactName = ArtifactName.parse('test.dependency:zeta:1.2')
+            def transitiveDependencyName = ArtifactName.parse('test.dependency:alpha:1.2')
+
+            def artifact = new Artifact(repository, artifactName)
+            def dependencyResolver = new DependencyPathResolver(artifact, transitiveDependencyName)
+            def originalDependencyPath = dependencyResolver.resolveDependency().dependencyPath
+
+        when:
+            def finder = new AlternativeDependencyPathsFinder(repository, artifactName, originalDependencyPath)
+            def alternativeDependencyPaths = finder.findAlternativePaths()
+
+        then:
+            alternativeDependencyPaths.size() == 1
+            alternativeDependencyPaths.collect({ it.toString() }) == ['test.dependency:zeta:1.2 -> test.dependency:beta:1.3 -> test.dependency:alpha:1.2']
+    }
 }
